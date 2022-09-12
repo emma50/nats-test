@@ -1,0 +1,1 @@
+Testing NATS streaming server
