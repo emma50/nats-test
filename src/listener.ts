@@ -12,6 +12,12 @@ const stan = nats.connect('ticketing', randomBytes(4).toString('hex'), {
 stan.on('connect', () => {
   console.log('Listener connected to NATS')
 
+  // listen to a client connection close event and exit process gracefully
+  stan.on('close', () => {
+    console.log('NATS connection closed')
+    process.exit()
+  })
+
   // create subscription options
   const options = stan.subscriptionOptions()
     .setManualAckMode(true)
@@ -36,3 +42,9 @@ stan.on('connect', () => {
     msg.ack()
   })
 })
+
+// Nodejs runtime process listening to the interrupt signal
+process.on('SIGINT', () => stan.close())
+
+// Nodejs runtime process listening to the terminate signal
+process.on('SIGTERM', () => stan.close())
