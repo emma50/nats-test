@@ -12,7 +12,7 @@ const stan = nats.connect('ticketing', randomBytes(4).toString('hex'), {
 stan.on('connect', () => {
   console.log('Listener connected to NATS')
 
-  const subscription = stan.subscribe('ticket:created')
+  const subscription = stan.subscribe('ticket:created', 'order-service-queue-group')
 
   // listen to the message event off subscription
   subscription.on('message', (msg: Message) => {
