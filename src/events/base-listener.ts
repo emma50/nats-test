@@ -1,7 +1,9 @@
 import { Message, Stan } from 'node-nats-streaming'
 
 export abstract class Listener {
-  // must be defined by a sub-class
+  // abstract: must be defined by a sub-class
+
+  // subject: a channel to listen or subscribe to i.e ticket-created
   abstract subject: string
   abstract queueGroupName: string
   abstract onMessage(data: any, msg: Message): void
